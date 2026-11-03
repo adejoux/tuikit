@@ -1,0 +1,8 @@
+# Test and coverage output
+*.test
+*.out
+coverage.*
+
+# Editor and OS files
+.DS_Store
+*.swp
