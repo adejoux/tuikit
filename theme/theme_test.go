@@ -3,6 +3,8 @@ package theme
 import (
 	"reflect"
 	"testing"
+
+	"charm.land/lipgloss/v2"
 )
 
 func TestThemesSetEveryRole(t *testing.T) {
@@ -30,5 +32,19 @@ func TestStylesUseThemeColours(t *testing.T) {
 	}
 	if st.ActivePanel.GetBorderTopForeground() != th.Accent {
 		t.Fatal("the focused panel border must use Accent")
+	}
+}
+
+func TestSelectedLineFillsWidth(t *testing.T) {
+	st := NewStyles(Dark())
+	for _, width := range []int{2, 10, 40} {
+		for _, value := range []string{"", "short", "a value much longer than the row width"} {
+			if got := lipgloss.Width(st.SelectedLine(value, width)); got != width {
+				t.Fatalf("SelectedLine(%q, %d) is %d cells", value, width, got)
+			}
+			if got := lipgloss.Width(st.Line(value, width)); got > width {
+				t.Fatalf("Line(%q, %d) is %d cells", value, width, got)
+			}
+		}
 	}
 }
