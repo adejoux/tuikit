@@ -10,10 +10,11 @@ so they stay consistent without copying code between repositories.
 
 | Package | Purpose |
 | --- | --- |
-| `theme` | Dark and light themes (colour roles) and the shared lipgloss styles |
+| `theme` | Dark and light themes (colour roles), the shared lipgloss styles and the selection gutter |
 | `keyhints` | One-line key hints, Crush style: `key desc • key desc • ? more` |
 | `dialog` | Dialog frame, title with a ╱╱╱ gradient rule, overlay on the screen |
 | `help` | Searchable shortcut dialog (`f1` / `?`), filtered by context and scope |
+| `form` | Keyboard-driven forms: text, completion, select and searchable picker fields |
 | `fuzzy` | Subsequence fuzzy matching and ranking for filters and pickers |
 | `diff` | Line diff with context, rendered for confirmation views |
 | `editor` | Open a file in `$VISUAL` / `$EDITOR`, positioned on a line when supported |

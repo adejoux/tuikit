@@ -5,8 +5,10 @@ package theme
 
 import (
 	"image/color"
+	"strings"
 
 	"charm.land/lipgloss/v2"
+	"github.com/charmbracelet/x/ansi"
 )
 
 // Theme is a named set of colour roles.
@@ -151,4 +153,32 @@ func NewStyles(t Theme) Styles {
 		DiffRemove:      lipgloss.NewStyle().Foreground(t.Danger),
 		DiffContext:     lipgloss.NewStyle().Foreground(t.Muted),
 	}
+}
+
+// Gutter is the two-cell selection gutter in front of a row: an accent bar
+// when selected, blank otherwise.
+func (s Styles) Gutter(selected bool) string {
+	if selected {
+		return s.SelectionMarker.Render("▌") + " "
+	}
+	return "  "
+}
+
+// SelectedLine renders value as the selected row of a list of the given
+// width: gutter, then the value cut or padded to the remaining width.
+func (s Styles) SelectedLine(value string, width int) string {
+	content := max(0, width-2)
+	if lipgloss.Width(value) > content {
+		value = ansi.Truncate(value, content, "…")
+	}
+	return s.Gutter(true) + value + strings.Repeat(" ", max(0, content-lipgloss.Width(value)))
+}
+
+// Line renders value as an unselected row of the given width.
+func (s Styles) Line(value string, width int) string {
+	content := max(0, width-2)
+	if lipgloss.Width(value) > content {
+		value = ansi.Truncate(value, content, "…")
+	}
+	return s.Gutter(false) + value
 }
